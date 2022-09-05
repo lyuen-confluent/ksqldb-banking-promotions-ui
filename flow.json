@@ -1,1 +1,1775 @@
-[]
+[
+    {
+        "id": "c053b1cd2d16fd80",
+        "type": "tab",
+        "label": "Banking Promotions",
+        "disabled": false,
+        "info": "https://developer.confluent.io/tutorials/next-best-offer/confluent.html",
+        "env": []
+    },
+    {
+        "id": "788f5c6dd1a16320",
+        "type": "subflow",
+        "name": "ksqlDB Query (CURL)",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 40,
+                "y": 100,
+                "wires": [
+                    {
+                        "id": "3898f6d4db07e823"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 1100,
+                "y": 40,
+                "wires": [
+                    {
+                        "id": "d4d52388ccd8cc6a",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 1090,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "356406be7272df45",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 550,
+                "y": 140,
+                "wires": [
+                    {
+                        "id": "e515f7547a66e244",
+                        "port": 1
+                    }
+                ]
+            },
+            {
+                "x": 570,
+                "y": 200,
+                "wires": [
+                    {
+                        "id": "e515f7547a66e244",
+                        "port": 2
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#DDAA99",
+        "outputLabels": [
+            "resultset",
+            "header",
+            "stderr",
+            "return code"
+        ],
+        "icon": "font-awesome/fa-database",
+        "status": {
+            "x": 500,
+            "y": 260,
+            "wires": [
+                {
+                    "id": "e515f7547a66e244",
+                    "port": 0
+                },
+                {
+                    "id": "e515f7547a66e244",
+                    "port": 2
+                }
+            ]
+        }
+    },
+    {
+        "id": "625872f.40b1e8c",
+        "type": "ui_group",
+        "name": "Customer",
+        "tab": "54e16d35f466b61f",
+        "order": 1,
+        "disp": true,
+        "width": "12",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "a6581228fd2ee79a",
+        "type": "ui_group",
+        "name": "Promotion Offers",
+        "tab": "54e16d35f466b61f",
+        "order": 2,
+        "disp": true,
+        "width": "10",
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "54e16d35f466b61f",
+        "type": "ui_tab",
+        "name": "Banking Promotions",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    },
+    {
+        "id": "e515f7547a66e244",
+        "type": "exec",
+        "z": "788f5c6dd1a16320",
+        "command": "curl --silent --no-buffer -X POST -d",
+        "addpay": "payload",
+        "append": "",
+        "useSpawn": "true",
+        "timer": "",
+        "winHide": false,
+        "oldrc": false,
+        "name": "push query",
+        "x": 390,
+        "y": 140,
+        "wires": [
+            [
+                "b15b4a670363428d"
+            ],
+            [],
+            []
+        ],
+        "icon": "font-awesome/fa-play"
+    },
+    {
+        "id": "b15b4a670363428d",
+        "type": "split",
+        "z": "788f5c6dd1a16320",
+        "name": "",
+        "splt": "\\n",
+        "spltType": "str",
+        "arraySplt": 1,
+        "arraySpltType": "len",
+        "stream": true,
+        "addname": "",
+        "x": 550,
+        "y": 80,
+        "wires": [
+            [
+                "2f730ea017a25435"
+            ]
+        ]
+    },
+    {
+        "id": "2f730ea017a25435",
+        "type": "json",
+        "z": "788f5c6dd1a16320",
+        "name": "",
+        "property": "payload",
+        "action": "",
+        "pretty": false,
+        "x": 670,
+        "y": 80,
+        "wires": [
+            [
+                "7445c93ec6bc4df5"
+            ]
+        ]
+    },
+    {
+        "id": "7445c93ec6bc4df5",
+        "type": "switch",
+        "z": "788f5c6dd1a16320",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "istype",
+                "v": "array",
+                "vt": "array"
+            },
+            {
+                "t": "istype",
+                "v": "object",
+                "vt": "object"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 790,
+        "y": 80,
+        "wires": [
+            [
+                "d4d52388ccd8cc6a"
+            ],
+            [
+                "356406be7272df45"
+            ]
+        ]
+    },
+    {
+        "id": "3898f6d4db07e823",
+        "type": "change",
+        "z": "788f5c6dd1a16320",
+        "name": "query payload",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "msg.payload & ' ' & msg.url",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 220,
+        "y": 140,
+        "wires": [
+            [
+                "e515f7547a66e244"
+            ]
+        ]
+    },
+    {
+        "id": "d4d52388ccd8cc6a",
+        "type": "function",
+        "z": "788f5c6dd1a16320",
+        "name": "resultset",
+        "func": "var keys = flow.get(msg.queryName).columnNames;\nvar values = msg.payload\n\nmsg.payload = Object.fromEntries(keys.map((k, i) => [k, values[i]]));\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 940,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "356406be7272df45",
+        "type": "function",
+        "z": "788f5c6dd1a16320",
+        "name": "header",
+        "func": "//var queryName = msg.queryName;\nflow.set(msg.queryName, msg.payload)\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 930,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "546661076e75c42a",
+        "type": "change",
+        "z": "788f5c6dd1a16320",
+        "name": "header",
+        "rules": [
+            {
+                "t": "set",
+                "p": "{{queryName}}",
+                "pt": "flow",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 110,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "57e2ac81bd42fe3e",
+        "type": "comment",
+        "z": "788f5c6dd1a16320",
+        "name": "backup",
+        "info": "",
+        "x": 90,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "14c431d637f99ce9",
+        "type": "http request",
+        "z": "c053b1cd2d16fd80",
+        "name": "Insert to ksqlDB",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1300,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e396bcfe78e37e2b",
+        "type": "ui_form",
+        "z": "c053b1cd2d16fd80",
+        "name": "",
+        "label": "",
+        "group": "625872f.40b1e8c",
+        "order": 3,
+        "width": 0,
+        "height": 0,
+        "options": [
+            {
+                "label": "Customer ID",
+                "value": "CUSTOMER_ID",
+                "type": "number",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "First Name",
+                "value": "FIRST_NAME",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Last Name",
+                "value": "LAST_NAME",
+                "type": "text",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Income",
+                "value": "INCOME",
+                "type": "number",
+                "required": true,
+                "rows": null
+            },
+            {
+                "label": "Email",
+                "value": "EMAIL",
+                "type": "email",
+                "required": true,
+                "rows": null
+            }
+        ],
+        "formValue": {
+            "CUSTOMER_ID": "",
+            "FIRST_NAME": "",
+            "LAST_NAME": "",
+            "INCOME": "",
+            "EMAIL": ""
+        },
+        "payload": "",
+        "submit": "submit",
+        "cancel": "cancel",
+        "topic": "topic",
+        "topicType": "msg",
+        "splitLayout": "",
+        "className": "",
+        "x": 450,
+        "y": 100,
+        "wires": [
+            [
+                "36d9c71a9040526e"
+            ]
+        ]
+    },
+    {
+        "id": "b6c45679a33afb69",
+        "type": "ui_slider",
+        "z": "c053b1cd2d16fd80",
+        "name": "",
+        "label": "FICO",
+        "tooltip": "",
+        "group": "625872f.40b1e8c",
+        "order": 1,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "outs": "end",
+        "topic": "topic",
+        "topicType": "msg",
+        "min": "300",
+        "max": "850",
+        "step": 1,
+        "className": "",
+        "x": 450,
+        "y": 160,
+        "wires": [
+            [
+                "d0a70d56117d49b0"
+            ]
+        ]
+    },
+    {
+        "id": "36d9c71a9040526e",
+        "type": "join",
+        "z": "c053b1cd2d16fd80",
+        "name": "",
+        "mode": "custom",
+        "build": "merged",
+        "property": "payload",
+        "propertyType": "msg",
+        "key": "topic",
+        "joiner": "\\n",
+        "joinerType": "str",
+        "accumulate": false,
+        "timeout": "",
+        "count": "3",
+        "reduceRight": false,
+        "reduceExp": "",
+        "reduceInit": "",
+        "reduceInitType": "",
+        "reduceFixup": "",
+        "x": 850,
+        "y": 100,
+        "wires": [
+            [
+                "e5c32784c512dbbc"
+            ]
+        ]
+    },
+    {
+        "id": "d0a70d56117d49b0",
+        "type": "change",
+        "z": "c053b1cd2d16fd80",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{ \"FICO\": payload }",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 640,
+        "y": 160,
+        "wires": [
+            [
+                "36d9c71a9040526e"
+            ]
+        ]
+    },
+    {
+        "id": "2b87fe0d895c6948",
+        "type": "ui_dropdown",
+        "z": "c053b1cd2d16fd80",
+        "name": "",
+        "label": "Gender",
+        "tooltip": "",
+        "place": "Select option",
+        "group": "625872f.40b1e8c",
+        "order": 2,
+        "width": 0,
+        "height": 0,
+        "passthru": true,
+        "multiple": false,
+        "options": [
+            {
+                "label": "",
+                "value": "Female",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "Male",
+                "type": "str"
+            },
+            {
+                "label": "",
+                "value": "Others",
+                "type": "str"
+            }
+        ],
+        "payload": "",
+        "topic": "topic",
+        "topicType": "msg",
+        "className": "",
+        "x": 460,
+        "y": 220,
+        "wires": [
+            [
+                "1e6bb7f96997671b"
+            ]
+        ]
+    },
+    {
+        "id": "1e6bb7f96997671b",
+        "type": "change",
+        "z": "c053b1cd2d16fd80",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{ \"GENDER\": payload }",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 640,
+        "y": 220,
+        "wires": [
+            [
+                "36d9c71a9040526e"
+            ]
+        ]
+    },
+    {
+        "id": "e5c32784c512dbbc",
+        "type": "template",
+        "z": "c053b1cd2d16fd80",
+        "name": "",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{\"ksql\":\"INSERT INTO customers (customer_id, first_name, last_name, email, gender, income, fico) VALUES  ({{payload.CUSTOMER_ID}},'{{payload.FIRST_NAME}}','{{payload.LAST_NAME}}','{{payload.EMAIL}}','{{payload.GENDER}}',{{payload.INCOME}}, {{payload.FICO}});\"}",
+        "output": "str",
+        "x": 980,
+        "y": 100,
+        "wires": [
+            [
+                "712ce47961c146a0"
+            ]
+        ]
+    },
+    {
+        "id": "28ccae4f6c7bbc8d",
+        "type": "ui_table",
+        "z": "c053b1cd2d16fd80",
+        "group": "625872f.40b1e8c",
+        "name": "",
+        "order": 3,
+        "width": "12",
+        "height": "8",
+        "columns": [
+            {
+                "field": "CUSTOMER_ID",
+                "title": "Customer ID",
+                "width": "5%",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "FIRST_NAME",
+                "title": "First Name",
+                "width": "10%",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "LAST_NAME",
+                "title": "Last Name",
+                "width": "10%",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "EMAIL",
+                "title": "Email",
+                "width": "",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "GENDER",
+                "title": "Gender",
+                "width": "10%",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "INCOME",
+                "title": "Income",
+                "width": "20%",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "FICO",
+                "title": "FICO",
+                "width": "25%",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            }
+        ],
+        "outputs": 1,
+        "cts": true,
+        "x": 990,
+        "y": 340,
+        "wires": [
+            [
+                "cd0e51c911efdf8a"
+            ]
+        ]
+    },
+    {
+        "id": "2fa684f5c2d8180f",
+        "type": "subflow:788f5c6dd1a16320",
+        "z": "c053b1cd2d16fd80",
+        "name": "",
+        "x": 400,
+        "y": 360,
+        "wires": [
+            [
+                "b8df4c5ec92c8c27"
+            ],
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "ee451d6e4d8a7d68",
+        "type": "inject",
+        "z": "c053b1cd2d16fd80",
+        "name": "Customers",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "url",
+                "v": "http://192.168.1.237:8088/query-stream",
+                "vt": "str"
+            },
+            {
+                "p": "queryName",
+                "v": "customers",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "2",
+        "topic": "",
+        "payload": "{\"sql\":\"select * from customers emit changes;\",\"properties\":{\"ksql.streams.auto.offset.reset\":\"earliest\"}}",
+        "payloadType": "str",
+        "x": 170,
+        "y": 340,
+        "wires": [
+            [
+                "2fa684f5c2d8180f"
+            ]
+        ]
+    },
+    {
+        "id": "1b38abefdfe55330",
+        "type": "inject",
+        "z": "c053b1cd2d16fd80",
+        "name": "Stop",
+        "props": [
+            {
+                "p": "kill",
+                "v": "",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 150,
+        "y": 380,
+        "wires": [
+            [
+                "2fa684f5c2d8180f"
+            ]
+        ]
+    },
+    {
+        "id": "62549e2e61e00bbd",
+        "type": "inject",
+        "z": "c053b1cd2d16fd80",
+        "name": "Clear",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "[]",
+        "payloadType": "json",
+        "x": 810,
+        "y": 380,
+        "wires": [
+            [
+                "28ccae4f6c7bbc8d"
+            ]
+        ]
+    },
+    {
+        "id": "b8df4c5ec92c8c27",
+        "type": "change",
+        "z": "c053b1cd2d16fd80",
+        "name": "Prep Data for Table",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\t    \"command\": \"updateOrAddData\",\t    \"arguments\": [\t        [\t            payload\t        ]\t    ],\t    \"returnPromise\": false\t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 630,
+        "y": 340,
+        "wires": [
+            [
+                "28ccae4f6c7bbc8d"
+            ]
+        ]
+    },
+    {
+        "id": "62e439a3a17a98f6",
+        "type": "function",
+        "z": "c053b1cd2d16fd80",
+        "name": "table paramter",
+        "func": "msg.ui_control = { tabulator: {} };\n\n//workaround that buttos can`t deliver empty strings\nif (msg.payload.hasOwnProperty('payload')) {\n    msg.payload = msg.payload.payload;\n}\n\nmsg.ui_control.tabulator[msg.topic] = msg.payload;\ndelete msg.topic;\nmsg.payload = null;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 800,
+        "y": 420,
+        "wires": [
+            [
+                "28ccae4f6c7bbc8d"
+            ]
+        ]
+    },
+    {
+        "id": "03a732de3385c2a1",
+        "type": "inject",
+        "z": "c053b1cd2d16fd80",
+        "name": "Set \"CUSTOMER_ID\" as Index",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "index",
+        "payload": "CUSTOMER_ID",
+        "payloadType": "str",
+        "x": 530,
+        "y": 420,
+        "wires": [
+            [
+                "62e439a3a17a98f6"
+            ]
+        ]
+    },
+    {
+        "id": "e121ecd8a5c4e349",
+        "type": "change",
+        "z": "c053b1cd2d16fd80",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "topic",
+                "pt": "msg",
+                "to": "columns",
+                "tot": "str"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "[{\"formatterParams\":{\"target\":\"_blank\",\"min\":300,\"max\":850,\"color\":[\"red\",\"orange\",\"green\"]},\"title\":\"FICO\",\"field\":\"FICO\",\"formatter\":\"progress\"},{\"title\":\"Income\",\"field\":\"INCOME\",\"formatter\":\"money\",\"formatterParams\":{\"decimal\":\".\",\"thousand\":\",\",\"symbol\":\"$\",\"precision\":false}}]",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 700,
+        "y": 460,
+        "wires": [
+            [
+                "62e439a3a17a98f6"
+            ]
+        ]
+    },
+    {
+        "id": "c24018c26dbd332e",
+        "type": "inject",
+        "z": "c053b1cd2d16fd80",
+        "name": "Format Columns",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 490,
+        "y": 460,
+        "wires": [
+            [
+                "e121ecd8a5c4e349"
+            ]
+        ]
+    },
+    {
+        "id": "ec7f6d5c0bd572d9",
+        "type": "change",
+        "z": "c053b1cd2d16fd80",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.FICO",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 240,
+        "y": 160,
+        "wires": [
+            [
+                "b6c45679a33afb69"
+            ]
+        ]
+    },
+    {
+        "id": "59a67a4d1611d842",
+        "type": "change",
+        "z": "c053b1cd2d16fd80",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.GENDER",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 240,
+        "y": 220,
+        "wires": [
+            [
+                "2b87fe0d895c6948"
+            ]
+        ]
+    },
+    {
+        "id": "588cafcad630efcb",
+        "type": "inject",
+        "z": "c053b1cd2d16fd80",
+        "name": "Clear",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 100,
+        "wires": [
+            [
+                "e396bcfe78e37e2b",
+                "b6c45679a33afb69",
+                "2b87fe0d895c6948"
+            ]
+        ]
+    },
+    {
+        "id": "cd0e51c911efdf8a",
+        "type": "link out",
+        "z": "c053b1cd2d16fd80",
+        "name": "Customer link out",
+        "mode": "link",
+        "links": [
+            "9165933c788e2635"
+        ],
+        "x": 1095,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "9165933c788e2635",
+        "type": "link in",
+        "z": "c053b1cd2d16fd80",
+        "name": "Customer link in",
+        "links": [
+            "cd0e51c911efdf8a"
+        ],
+        "x": 95,
+        "y": 180,
+        "wires": [
+            [
+                "59a67a4d1611d842",
+                "ec7f6d5c0bd572d9",
+                "e396bcfe78e37e2b"
+            ]
+        ]
+    },
+    {
+        "id": "f2b418ed12ad412a",
+        "type": "ui_chart",
+        "z": "c053b1cd2d16fd80",
+        "name": "",
+        "group": "a6581228fd2ee79a",
+        "order": 1,
+        "width": "0",
+        "height": "0",
+        "label": "Promotion Offers",
+        "chartType": "bar",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 790,
+        "y": 580,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a9c3ab98051c8dd0",
+        "type": "subflow:788f5c6dd1a16320",
+        "z": "c053b1cd2d16fd80",
+        "name": "",
+        "x": 400,
+        "y": 600,
+        "wires": [
+            [
+                "42baa588bfd6dad4"
+            ],
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "d2702ab7ee75747a",
+        "type": "inject",
+        "z": "c053b1cd2d16fd80",
+        "name": "Promotion Offer",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "url",
+                "v": "http://192.168.1.237:8088/query-stream",
+                "vt": "str"
+            },
+            {
+                "p": "queryName",
+                "v": "promoOffer",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"sql\":\"SELECT count(CUSTOMER_ID) as OFFER_COUNT, OFFER_NAME FROM next_best_offer_lookup group by OFFER_NAME emit changes;\",\"properties\":{\"ksql.streams.auto.offset.reset\":\"earliest\"}}",
+        "payloadType": "str",
+        "x": 180,
+        "y": 600,
+        "wires": [
+            [
+                "a9c3ab98051c8dd0"
+            ]
+        ]
+    },
+    {
+        "id": "ea9dedcf5bfcb8c4",
+        "type": "inject",
+        "z": "c053b1cd2d16fd80",
+        "name": "Stop",
+        "props": [
+            {
+                "p": "kill",
+                "v": "",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 150,
+        "y": 640,
+        "wires": [
+            [
+                "a9c3ab98051c8dd0"
+            ]
+        ]
+    },
+    {
+        "id": "42baa588bfd6dad4",
+        "type": "change",
+        "z": "c053b1cd2d16fd80",
+        "name": "Prep Data",
+        "rules": [
+            {
+                "t": "set",
+                "p": "label",
+                "pt": "msg",
+                "to": "payload.OFFER_NAME",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.OFFER_COUNT",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 600,
+        "y": 580,
+        "wires": [
+            [
+                "f2b418ed12ad412a"
+            ]
+        ]
+    },
+    {
+        "id": "54f79d10f196e1e2",
+        "type": "inject",
+        "z": "c053b1cd2d16fd80",
+        "name": "Clear",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "[]",
+        "payloadType": "json",
+        "x": 610,
+        "y": 620,
+        "wires": [
+            [
+                "f2b418ed12ad412a"
+            ]
+        ]
+    },
+    {
+        "id": "fcf5f8c5e3549210",
+        "type": "comment",
+        "z": "c053b1cd2d16fd80",
+        "name": "Click to start",
+        "info": "Promotion Offer",
+        "x": 150,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "ba9a80c890f22ac8",
+        "type": "subflow:788f5c6dd1a16320",
+        "z": "c053b1cd2d16fd80",
+        "name": "",
+        "x": 400,
+        "y": 760,
+        "wires": [
+            [
+                "9861d3364f4e1008"
+            ],
+            [],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "7ee591bb8b0c6d10",
+        "type": "inject",
+        "z": "c053b1cd2d16fd80",
+        "name": "Next Best Offer",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "url",
+                "v": "http://192.168.1.237:8088/query-stream",
+                "vt": "str"
+            },
+            {
+                "p": "queryName",
+                "v": "nextBestOffer",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "{\"sql\":\"select * from next_best_offer_lookup emit changes;\",\"properties\":{\"ksql.streams.auto.offset.reset\":\"earliest\"}}",
+        "payloadType": "str",
+        "x": 180,
+        "y": 740,
+        "wires": [
+            [
+                "ba9a80c890f22ac8"
+            ]
+        ]
+    },
+    {
+        "id": "2ab16873cc1db38c",
+        "type": "inject",
+        "z": "c053b1cd2d16fd80",
+        "name": "Stop",
+        "props": [
+            {
+                "p": "kill",
+                "v": "",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 150,
+        "y": 780,
+        "wires": [
+            [
+                "ba9a80c890f22ac8"
+            ]
+        ]
+    },
+    {
+        "id": "9861d3364f4e1008",
+        "type": "change",
+        "z": "c053b1cd2d16fd80",
+        "name": "Prep Data for Table",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "{\t    \"command\": \"addData\",\t    \"arguments\": [\t        [\t            payload\t        ],\t        true\t    ],\t    \"returnPromise\": false\t}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 630,
+        "y": 740,
+        "wires": [
+            [
+                "2fc3aac941078b87"
+            ]
+        ]
+    },
+    {
+        "id": "2fc3aac941078b87",
+        "type": "ui_table",
+        "z": "c053b1cd2d16fd80",
+        "group": "a6581228fd2ee79a",
+        "name": "",
+        "order": 4,
+        "width": "10",
+        "height": "10",
+        "columns": [
+            {
+                "field": "NBO_OFFER_ID",
+                "title": "Offer ID",
+                "width": "",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "OFFER_NAME",
+                "title": "Offer Name",
+                "width": "",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "CUSTOMER_ID",
+                "title": "Customer ID",
+                "width": "",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "PROPENSITY_TO_BUY",
+                "title": "PTB",
+                "width": "",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "INCOME",
+                "title": "Income",
+                "width": "",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "FICO",
+                "title": "FICO",
+                "width": "",
+                "align": "left",
+                "formatter": "plaintext",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            },
+            {
+                "field": "OFFER_URL",
+                "title": "URL",
+                "width": "",
+                "align": "left",
+                "formatter": "link",
+                "formatterParams": {
+                    "target": "_blank"
+                }
+            }
+        ],
+        "outputs": 0,
+        "cts": false,
+        "x": 830,
+        "y": 740,
+        "wires": []
+    },
+    {
+        "id": "219c786d99ed3c41",
+        "type": "inject",
+        "z": "c053b1cd2d16fd80",
+        "name": "Clear",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "[]",
+        "payloadType": "json",
+        "x": 610,
+        "y": 780,
+        "wires": [
+            [
+                "2fc3aac941078b87"
+            ]
+        ]
+    },
+    {
+        "id": "21be8f471fe4876d",
+        "type": "event",
+        "z": "c053b1cd2d16fd80",
+        "name": "",
+        "controlTopic": "control",
+        "startCmd": "start",
+        "stopCmd": "stop",
+        "distribution": "exponential",
+        "expMeanInterval": "3",
+        "minInterval": 1,
+        "maxInterval": 2,
+        "gaussMeanInterval": 1,
+        "stdDev": 1,
+        "outputTopic": "event",
+        "outputPayload": "{}",
+        "outputPayloadType": "json",
+        "maxEventCount": "100",
+        "x": 290,
+        "y": 920,
+        "wires": [
+            [
+                "4757ed9b72d2c9f8"
+            ]
+        ]
+    },
+    {
+        "id": "5e3121e39dc19d63",
+        "type": "random",
+        "z": "c053b1cd2d16fd80",
+        "name": "Random Activity ID",
+        "low": "1",
+        "high": "10",
+        "inte": "true",
+        "property": "payload.ACTIVITY_ID",
+        "x": 690,
+        "y": 920,
+        "wires": [
+            [
+                "c0c9ce699f611ef2"
+            ]
+        ]
+    },
+    {
+        "id": "4757ed9b72d2c9f8",
+        "type": "random",
+        "z": "c053b1cd2d16fd80",
+        "name": "Random Customer ID",
+        "low": 1,
+        "high": "10",
+        "inte": "true",
+        "property": "payload.CUSTOMER_ID",
+        "x": 480,
+        "y": 920,
+        "wires": [
+            [
+                "5e3121e39dc19d63"
+            ]
+        ]
+    },
+    {
+        "id": "650cb92670978db6",
+        "type": "ui_button",
+        "z": "c053b1cd2d16fd80",
+        "name": "",
+        "group": "a6581228fd2ee79a",
+        "order": 2,
+        "width": "2",
+        "height": "1",
+        "passthru": false,
+        "label": "Start",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "start",
+        "payloadType": "str",
+        "topic": "control",
+        "topicType": "str",
+        "x": 130,
+        "y": 900,
+        "wires": [
+            [
+                "21be8f471fe4876d"
+            ]
+        ]
+    },
+    {
+        "id": "03be97b9cbdc470d",
+        "type": "ui_button",
+        "z": "c053b1cd2d16fd80",
+        "name": "",
+        "group": "a6581228fd2ee79a",
+        "order": 3,
+        "width": "2",
+        "height": "1",
+        "passthru": false,
+        "label": "Stop",
+        "tooltip": "",
+        "color": "",
+        "bgcolor": "",
+        "className": "",
+        "icon": "",
+        "payload": "stop",
+        "payloadType": "str",
+        "topic": "control",
+        "topicType": "str",
+        "x": 130,
+        "y": 940,
+        "wires": [
+            [
+                "21be8f471fe4876d"
+            ]
+        ]
+    },
+    {
+        "id": "c0c9ce699f611ef2",
+        "type": "random",
+        "z": "c053b1cd2d16fd80",
+        "name": "Random PTB",
+        "low": "0",
+        "high": "1",
+        "inte": "false",
+        "property": "payload.PROPENSITY_TO_BUY",
+        "x": 460,
+        "y": 960,
+        "wires": [
+            [
+                "e76df6bc1584c7fc"
+            ]
+        ]
+    },
+    {
+        "id": "f8d076a68334c5ae",
+        "type": "random-item",
+        "z": "c053b1cd2d16fd80",
+        "name": "Random Activity",
+        "input": "[\"branch_visit\",\"deposit\",\"web_open\",\"mobile_open\",\"open_account\"]",
+        "inputType": "json",
+        "output": "payload.ACTIVITY_TYPE",
+        "outputType": "msg",
+        "number": 1,
+        "x": 600,
+        "y": 1000,
+        "wires": [
+            [
+                "527a547ac55fb277"
+            ]
+        ]
+    },
+    {
+        "id": "fecb3dce47059458",
+        "type": "change",
+        "z": "c053b1cd2d16fd80",
+        "name": "set IP",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.IP_ADDRESS",
+                "pt": "msg",
+                "to": "unknown",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 430,
+        "y": 1000,
+        "wires": [
+            [
+                "f8d076a68334c5ae"
+            ]
+        ]
+    },
+    {
+        "id": "e76df6bc1584c7fc",
+        "type": "change",
+        "z": "c053b1cd2d16fd80",
+        "name": "round up PTB",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload.PROPENSITY_TO_BUY",
+                "pt": "msg",
+                "to": "$round(payload.PROPENSITY_TO_BUY,2)",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 640,
+        "y": 960,
+        "wires": [
+            [
+                "fecb3dce47059458"
+            ]
+        ]
+    },
+    {
+        "id": "527a547ac55fb277",
+        "type": "template",
+        "z": "c053b1cd2d16fd80",
+        "name": "Prep Insert Statement",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "{\"ksql\":\"INSERT INTO customer_activity_stream (customer_id, activity_id, ip_address, activity_type, propensity_to_buy) VALUES  ({{payload.CUSTOMER_ID}},{{payload.ACTIVITY_ID}},'{{payload.IP_ADDRESS}}','{{payload.ACTIVITY_TYPE}}',{{payload.PROPENSITY_TO_BUY}});\"}",
+        "output": "str",
+        "x": 980,
+        "y": 920,
+        "wires": [
+            [
+                "9f0ac8319b5b2799"
+            ]
+        ]
+    },
+    {
+        "id": "9f0ac8319b5b2799",
+        "type": "change",
+        "z": "c053b1cd2d16fd80",
+        "name": "Set endpoint",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "http://192.168.1.237:8088/ksql",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1170,
+        "y": 920,
+        "wires": [
+            [
+                "2e990801bf0c708e"
+            ]
+        ]
+    },
+    {
+        "id": "2e990801bf0c708e",
+        "type": "http request",
+        "z": "c053b1cd2d16fd80",
+        "name": "Insert to ksqlDB",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 1340,
+        "y": 920,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f6367547d839c42a",
+        "type": "comment",
+        "z": "c053b1cd2d16fd80",
+        "name": "Customer Edit Form",
+        "info": "",
+        "x": 170,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "6057fb6b860d3346",
+        "type": "comment",
+        "z": "c053b1cd2d16fd80",
+        "name": "Load Customers to Table",
+        "info": "",
+        "x": 190,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "99c20f5cdcc3dabc",
+        "type": "comment",
+        "z": "c053b1cd2d16fd80",
+        "name": "Click to start",
+        "info": "Next Best Offer",
+        "x": 150,
+        "y": 700,
+        "wires": []
+    },
+    {
+        "id": "ade878b1a6a56aef",
+        "type": "comment",
+        "z": "c053b1cd2d16fd80",
+        "name": "Simulate Customer Activities",
+        "info": "Next Best Offer",
+        "x": 200,
+        "y": 860,
+        "wires": []
+    },
+    {
+        "id": "712ce47961c146a0",
+        "type": "change",
+        "z": "c053b1cd2d16fd80",
+        "name": "Set endpoint",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "http://192.168.1.237:8088/ksql",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 1130,
+        "y": 100,
+        "wires": [
+            [
+                "14c431d637f99ce9"
+            ]
+        ]
+    }
+]
