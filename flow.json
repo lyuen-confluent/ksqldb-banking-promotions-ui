@@ -758,8 +758,8 @@
         "topic": "",
         "payload": "[]",
         "payloadType": "json",
-        "x": 810,
-        "y": 380,
+        "x": 790,
+        "y": 420,
         "wires": [
             [
                 "28ccae4f6c7bbc8d"
@@ -805,7 +805,7 @@
         "finalize": "",
         "libs": [],
         "x": 800,
-        "y": 420,
+        "y": 460,
         "wires": [
             [
                 "28ccae4f6c7bbc8d"
@@ -834,7 +834,7 @@
         "payload": "CUSTOMER_ID",
         "payloadType": "str",
         "x": 530,
-        "y": 420,
+        "y": 460,
         "wires": [
             [
                 "62e439a3a17a98f6"
@@ -868,7 +868,7 @@
         "to": "",
         "reg": false,
         "x": 700,
-        "y": 460,
+        "y": 500,
         "wires": [
             [
                 "62e439a3a17a98f6"
@@ -897,7 +897,7 @@
         "payload": "",
         "payloadType": "date",
         "x": 490,
-        "y": 460,
+        "y": 500,
         "wires": [
             [
                 "e121ecd8a5c4e349"
@@ -1209,7 +1209,7 @@
         "z": "c053b1cd2d16fd80",
         "name": "Click to start",
         "info": "Promotion Offer",
-        "x": 150,
+        "x": 70,
         "y": 560,
         "wires": []
     },
@@ -1731,7 +1731,7 @@
         "z": "c053b1cd2d16fd80",
         "name": "Click to start",
         "info": "Next Best Offer",
-        "x": 150,
+        "x": 70,
         "y": 700,
         "wires": []
     },
