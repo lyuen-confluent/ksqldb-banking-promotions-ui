@@ -109,7 +109,7 @@
         "tab": "54e16d35f466b61f",
         "order": 2,
         "disp": true,
-        "width": "10",
+        "width": "12",
         "collapse": false,
         "className": ""
     },
@@ -1323,8 +1323,8 @@
         "group": "a6581228fd2ee79a",
         "name": "",
         "order": 4,
-        "width": "10",
-        "height": "10",
+        "width": "12",
+        "height": "8",
         "columns": [
             {
                 "field": "NBO_OFFER_ID",
