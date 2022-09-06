@@ -700,7 +700,7 @@
         "repeat": "",
         "crontab": "",
         "once": true,
-        "onceDelay": "2",
+        "onceDelay": "1",
         "topic": "",
         "payload": "{\"sql\":\"select * from customers emit changes;\",\"properties\":{\"ksql.streams.auto.offset.reset\":\"earliest\"}}",
         "payloadType": "str",
