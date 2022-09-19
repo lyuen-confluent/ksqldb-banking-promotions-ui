@@ -688,7 +688,7 @@
             },
             {
                 "p": "url",
-                "v": "http://192.168.1.237:8088/query-stream",
+                "v": "http://ksqldb-server:8088/query-stream",
                 "vt": "str"
             },
             {
@@ -1091,7 +1091,7 @@
             },
             {
                 "p": "url",
-                "v": "http://192.168.1.237:8088/query-stream",
+                "v": "http://ksqldb-server:8088/query-stream",
                 "vt": "str"
             },
             {
@@ -1240,7 +1240,7 @@
             },
             {
                 "p": "url",
-                "v": "http://192.168.1.237:8088/query-stream",
+                "v": "http://ksqldb-server:8088/query-stream",
                 "vt": "str"
             },
             {
@@ -1254,7 +1254,7 @@
         "once": false,
         "onceDelay": 0.1,
         "topic": "",
-        "payload": "{\"sql\":\"select * from next_best_offer_lookup emit changes;\",\"properties\":{\"ksql.streams.auto.offset.reset\":\"earliest\"}}",
+        "payload": "{\"sql\":\"select * from next_best_offer_lookup emit changes;\",\"properties\":{\"ksql.streams.auto.offset.reset\":\"latest\"}}",
         "payloadType": "str",
         "x": 180,
         "y": 740,
@@ -1666,7 +1666,7 @@
                 "t": "set",
                 "p": "url",
                 "pt": "msg",
-                "to": "http://192.168.1.237:8088/ksql",
+                "to": "http://ksqldb-server:8088/ksql",
                 "tot": "str"
             }
         ],
@@ -1755,7 +1755,7 @@
                 "t": "set",
                 "p": "url",
                 "pt": "msg",
-                "to": "http://192.168.1.237:8088/ksql",
+                "to": "http://ksqldb-server:8088/ksql",
                 "tot": "str"
             }
         ],
